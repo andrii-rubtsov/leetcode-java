@@ -1,19 +1,26 @@
 package common.utils;
 
 import java.io.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public abstract class TestUtils {
 
-    private static final Pattern ARRAY_2D = Pattern.compile("(\\d+),(\\d+)");
-
     public static int[][] array2d(String source) {
-        source = source.substring(1, source.length() - 1);
-        Matcher matcher = ARRAY_2D.matcher(source);
-        return matcher.results().map(result ->
-            new int[]{Integer.parseInt(result.group(1)), Integer.parseInt(result.group(2))}
-        ).toList().toArray(new int[][]{});
+        //source = source.substring(1, source.length() - 1);
+        List<int[]> res = new ArrayList<>();
+        int startIdx = 0;
+        int endIdx = 0;
+        while ((startIdx = source.indexOf("[", startIdx + 1)) >= 0) {
+            endIdx = source.indexOf("]", endIdx + 1);
+            String arrSubstring = source.substring(startIdx + 1, endIdx);
+            int[] e = Arrays.stream(arrSubstring.split(","))
+                    .mapToInt(Integer::parseInt)
+                    .toArray();
+            res.add(e);
+        }
+        return res.toArray(new int[][]{});
     }
 
     public static int[][] array2dFromClasspath(String packageName, String classpathResource) {
