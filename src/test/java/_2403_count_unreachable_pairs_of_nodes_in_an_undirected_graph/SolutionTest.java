@@ -2,7 +2,7 @@ package _2403_count_unreachable_pairs_of_nodes_in_an_undirected_graph;
 
 import org.junit.jupiter.api.Test;
 
-import static common.utils.TestUtils.*;
+import static common.TestUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 

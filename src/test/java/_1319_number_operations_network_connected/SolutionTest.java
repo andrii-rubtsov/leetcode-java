@@ -1,6 +1,6 @@
 package _1319_number_operations_network_connected;
 
-import common.utils.TestUtils;
+import common.TestUtils;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

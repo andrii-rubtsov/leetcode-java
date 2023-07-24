@@ -2,7 +2,7 @@ package _1466_reorder_routes_paths_lead_to_zero;
 
 import org.junit.jupiter.api.Test;
 
-import static common.utils.TestUtils.array2d;
+import static common.TestUtils.array2d;
 import static org.junit.jupiter.api.Assertions.*;
 
 

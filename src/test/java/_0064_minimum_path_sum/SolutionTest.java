@@ -2,7 +2,7 @@ package _0064_minimum_path_sum;
 
 import org.junit.jupiter.api.Test;
 
-import static common.utils.TestUtils.array2d;
+import static common.TestUtils.array2d;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
