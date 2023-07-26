@@ -41,6 +41,7 @@ class Solution {
     private double calcTravelTime(int speed) {
         int totalTime = 0;
         for (int i = 0; i < dist.length - 1; i++) {
+            // The trick with extra `speed - 1` is to add `1` if the division's remainder was > 0
             totalTime += (dist[i] + (speed - 1)) / speed;
         }
         return totalTime + (1.0 * dist[dist.length - 1] / speed);
