@@ -10,53 +10,40 @@ import java.util.Arrays;
 class Solution {
 
     int[] dist;
-    double timeBudget;
 
-    public int minSpeedOnTime(int[] dist, double hour) {
+    public int minSpeedOnTime(int[] dist, double timeBudget) {
         this.dist = dist;
-        this.timeBudget = hour;
 
         double maxTimeForLastSegment = timeBudget - (dist.length - 1);
         if (maxTimeForLastSegment <= 0) {
             return -1;
         }
-        int maxDist = Arrays.stream(dist).max().getAsInt();
+        int maxDist = Arrays.stream(dist).max().orElseThrow();
         int speedToTravelLastSegmentInTime = (int) Math.ceil(dist[dist.length - 1] / maxTimeForLastSegment);
         int maxSpeed = Math.max(maxDist, speedToTravelLastSegmentInTime);
 
-        return this.findMinimalSpeed(1, maxSpeed);
-    }
-
-    private int findMinimalSpeed(int left, int right) {
-        if (left == right) {
-            return left;
+        int left = 1;
+        int right = maxSpeed;
+        while (left != right) {
+            int mid = (left + right) / 2;
+            double travelTime = calcTravelTime(mid);
+            if (travelTime == timeBudget) {
+                return mid;
+            } else if (travelTime < timeBudget) {
+                right = mid;
+            } else {
+                left = mid + 1;
+            }
         }
-        int mid = (left + right) / 2;
-
-        double travelTime = calcTravelTime(mid);
-        if (travelTime == this.timeBudget) {
-            return mid;
-        } else if (travelTime < this.timeBudget) {
-            return findMinimalSpeed(left, mid);
-        } else {
-            return findMinimalSpeed(mid + 1, right);
-        }
+        return left;
     }
 
     private double calcTravelTime(int speed) {
-        double time = 0.0;
-        for (int i = 0; i < this.dist.length; i++) {
-            if (i < this.dist.length - 1) {
-                int travel_hours = this.dist[i] / speed;
-                if (this.dist[i] % speed > 0) {
-                    travel_hours += 1;
-                }
-                time += travel_hours;
-            } else {
-                time += (1.0 * this.dist[i] / speed);
-            }
+        int totalTime = 0;
+        for (int i = 0; i < dist.length - 1; i++) {
+            totalTime += (dist[i] + (speed - 1)) / speed;
         }
-        return time;
+        return totalTime + (1.0 * dist[dist.length - 1] / speed);
     }
 
 }
